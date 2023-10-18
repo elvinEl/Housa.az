@@ -14,3 +14,25 @@
 .my-swiper .swiper-slide-active img {
   opacity: 1;
 }
+.card:hover .anima {
+  transform: scale(0.9);
+  transition: transform 0.3s ease-in-out border-radius 0.3 ease-in-out;
+  border-radius: 20px;
+}
+.anima {
+  transition: transform 0.3s ease-in-out, border-radius 0.3s ease-in-out;
+}
+.card:hover .heart {
+  background-color: lime;
+  color: red;
+}
+/* LEFT RIGHT BUTTONS */
+.card .right-button,
+.card .left-button {
+  display: none;
+}
+.card:hover .right-button,
+.card:hover .left-button {
+  display: block;
+}
+/* ///////////////// */
