@@ -4,7 +4,7 @@ import Navigation from "./Navigation";
 function Header() {
   return (
     <div
-      className="grid grid-cols-4 items-center py-2 px-4 border-[2px] border-[#EAEAEA] rounded-[10px] "
+      className="grid grid-cols-4 items-center py-2  px-4 border-[2px] border-[#EAEAEA] rounded-[10px] "
       style={{
         background:
           "linear-gradient(249deg, rgba(255, 255, 255, 0.80) 12.52%, rgba(246, 243, 255, 0.80) 58.19%)",

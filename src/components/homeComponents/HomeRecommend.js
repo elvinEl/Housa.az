@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
 import "swiper/css/pagination";
@@ -9,20 +9,82 @@ import {
   AiOutlineLeft,
   AiOutlineRight,
 } from "react-icons/ai";
+import data from "../data.json";
 
 function HomeRecommend() {
+  const [cardsData, setCardsData] = useState([]);
   const [activeButton, setActiveButton] = useState("rent");
   const [activePropertyType, setActivePropertyType] = useState("");
-  const [activeHeart, setActiveHeart] = useState(false);
+  const [activeHearts, setActiveHearts] = useState(
+    Array(data.length).fill(false)
+  );
+
+  useEffect(() => {
+    setCardsData(data);
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+  const handleResize = () => {
+    setSlidesPerView(getInitialSlidesPerView());
+  };
+  const getInitialSlidesPerView = () => {
+    const windowWidth = window.innerWidth;
+    if (windowWidth > 1536) {
+      return 5;
+    } else if (windowWidth > 1280) {
+      return 4;
+    } else if (windowWidth > 1024) {
+      return 3;
+    } else if (windowWidth > 768) {
+      return 2;
+    } else {
+      return 1;
+    }
+  };
+  const [slidesPerView, setSlidesPerView] = useState(getInitialSlidesPerView());
+
   const handleButtonClick = (buttonType) => {
     setActiveButton(buttonType);
   };
-  const handleHeartClick = () => {
-    setActiveHeart(!activeHeart);
+  const handleHeartClick = (index) => {
+    setActiveHearts((prevHearts) => {
+      const newHearts = [...prevHearts];
+      newHearts[index] = !prevHearts[index];
+      return newHearts;
+    });
   };
   const handlePropertyTypeClick = (buttonType) => {
     setActivePropertyType(buttonType);
   };
+
+  ///////////////////////////
+  const [imageIndices, setImageIndices] = useState(Array(data.length).fill(0));
+
+  const handleNextImage = (index) => {
+    setImageIndices((prevIndices) => {
+      const newIndices = [...prevIndices];
+      newIndices[index] =
+        (prevIndices[index] + 1) % cardsData[index].img.length;
+      return newIndices;
+    });
+  };
+
+  const handlePreviousImage = (index) => {
+    setImageIndices((prevIndices) => {
+      const newIndices = [...prevIndices];
+      const newIndex =
+        (prevIndices[index] - 1 + cardsData[index].img.length) %
+        cardsData[index].img.length;
+      newIndices[index] =
+        newIndex >= 0 ? newIndex : cardsData[index].img.length - 1;
+      return newIndices;
+    });
+  };
+
+  ////////////////////
+
   return (
     <div className="mb-8">
       <div className="max-w-[80%] mx-auto">
@@ -103,9 +165,9 @@ function HomeRecommend() {
             </button>
           </div>
         </div>
-        <div className="">
+        <div>
           <Swiper
-            slidesPerView={5}
+            slidesPerView={slidesPerView}
             spaceBetween={30}
             // pagination={{
             //   clickable: true,
@@ -113,518 +175,84 @@ function HomeRecommend() {
             modules={[Pagination]}
             className="mySwiper"
           >
-            <SwiperSlide>
-              <div className="border-[1px] rounded-[20px] card relative">
-                <div className="h-[300px] relative">
-                  <button
-                    onClick={handleHeartClick}
-                    className="absolute right-[5%] top-[5%] bg-white p-2 border-[1px] border-[#e0def7] rounded-[8px] "
+            {cardsData.map((data, index) => {
+              const currentImageIndex = imageIndices[index];
+              return (
+                <SwiperSlide>
+                  <div
+                    key={index}
+                    className="border-[1px] rounded-[20px] card relative"
                   >
-                    <span className="heart">
-                      {activeHeart ? (
-                        <span className="text-red-600">
-                          <AiFillHeart />
+                    <div className="h-[300px] relative">
+                      <button
+                        onClick={() => handleHeartClick(index)}
+                        className="absolute right-[5%] top-[5%] bg-white p-2 border-[1px] border-[#e0def7] rounded-[8px] "
+                      >
+                        <span className="heart">
+                          {activeHearts[index] ? (
+                            <span className="text-red-600">
+                              <AiFillHeart />
+                            </span>
+                          ) : (
+                            <AiOutlineHeart />
+                          )}
                         </span>
-                      ) : (
-                        <AiOutlineHeart />
-                      )}
-                    </span>
-                  </button>
-                  <img
-                    className="h-full w-full rounded-[20px]"
-                    src="../assets/all/h.png"
-                    alt=""
-                  />
-                  <div className="right-button absolute top-1/2 right-[5%] transform -translate-y-1/2">
-                    <button className="bg-white p-2 border-[1px] border-[#e0def7] rounded-[50%]">
-                      <AiOutlineRight />
-                    </button>
-                  </div>
-                  <div className="left-button absolute top-1/2 left-[5%] transform -translate-y-1/2">
-                    <button className="bg-white p-2 border-[1px] border-[#e0def7] rounded-[50%]">
-                      <AiOutlineLeft />
-                    </button>
-                  </div>
-                </div>
-                <div className="p-3 font-semibold text-[#101730] anima absolute w-full bottom-0 rounded-b-[20px]  bg-white">
-                  <p className="text-[14px]">Ağ şəhər</p>
-                  <div className="my-2 flex text-[#FF8A00]">
-                    <span>
-                      <AiFillStar />
-                    </span>
-                    <span>
-                      <AiFillStar />
-                    </span>
-                    <span>
-                      <AiFillStar />
-                    </span>
-                    <span>
-                      <AiFillStar />
-                    </span>
-                    <span>
-                      <AiFillStar />
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <p className="text-[16px]">$ 125 000</p>
-                    <button className="text-[#51aeea] text-[14px] flex items-center gap-2">
-                      Explore More
-                      <span>
-                        <AiOutlineRight />
-                      </span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </SwiperSlide>
-            <SwiperSlide>
-              <div className="border-[1px] rounded-[20px] card relative">
-                <div className="h-[300px] relative">
-                  <button
-                    onClick={handleHeartClick}
-                    className="absolute right-[5%] top-[5%] bg-white p-2 border-[1px] border-[#e0def7] rounded-[8px] "
-                  >
-                    <span className="heart">
-                      {activeHeart ? (
-                        <span className="text-red-600">
-                          <AiFillHeart />
+                      </button>
+                      <img
+                        className="h-full w-full rounded-[20px]"
+                        src={data.img[currentImageIndex]}
+                        alt=""
+                      />
+                      <div className="right-button absolute top-1/2 right-[5%] transform -translate-y-1/2">
+                        <button
+                          onClick={() => handleNextImage(index)}
+                          className="bg-white p-2 border-[1px] border-[#e0def7] rounded-[50%]"
+                        >
+                          <AiOutlineRight />
+                        </button>
+                      </div>
+                      <div className="left-button absolute top-1/2 left-[5%] transform -translate-y-1/2">
+                        <button
+                          onClick={() => handlePreviousImage(index)}
+                          className="bg-white p-2 border-[1px] border-[#e0def7] rounded-[50%]"
+                        >
+                          <AiOutlineLeft />
+                        </button>
+                      </div>
+                    </div>
+                    <div className="p-3 font-semibold text-[#101730] anima absolute w-full bottom-0 rounded-b-[20px]  bg-white">
+                      <p className="text-[14px]">{data.title}</p>
+                      <div className="my-2 flex text-[#FF8A00]">
+                        <span>
+                          <AiFillStar />
                         </span>
-                      ) : (
-                        <AiOutlineHeart />
-                      )}
-                    </span>
-                  </button>
-                  <img
-                    className="h-full w-full rounded-[20px]"
-                    src="../assets/all/h1.png"
-                    alt=""
-                  />
-                  <div className="right-button absolute top-1/2 right-[5%] transform -translate-y-1/2">
-                    <button className="bg-white p-2 border-[1px] border-[#e0def7] rounded-[50%]">
-                      <AiOutlineRight />
-                    </button>
-                  </div>
-                  <div className="left-button absolute top-1/2 left-[5%] transform -translate-y-1/2">
-                    <button className="bg-white p-2 border-[1px] border-[#e0def7] rounded-[50%]">
-                      <AiOutlineLeft />
-                    </button>
-                  </div>
-                </div>
-                <div className="p-3 font-semibold text-[#101730] anima absolute w-full bottom-0 rounded-b-[20px]  bg-white">
-                  <p className="text-[14px]">Ağ şəhər</p>
-                  <div className="my-2 flex text-[#FF8A00]">
-                    <span>
-                      <AiFillStar />
-                    </span>
-                    <span>
-                      <AiFillStar />
-                    </span>
-                    <span>
-                      <AiFillStar />
-                    </span>
-                    <span>
-                      <AiFillStar />
-                    </span>
-                    <span>
-                      <AiFillStar />
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <p className="text-[16px]">$ 125 000</p>
-                    <button className="text-[#51aeea] text-[14px] flex items-center gap-2">
-                      Explore More
-                      <span>
-                        <AiOutlineRight />
-                      </span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </SwiperSlide>
-            <SwiperSlide>
-              <div className="  border-[1px] rounded-[20px] card relative">
-                <div className="h-[300px] relative">
-                  <button
-                    onClick={handleHeartClick}
-                    className="absolute right-[5%] top-[5%] bg-white p-2 border-[1px] border-[#e0def7] rounded-[8px] "
-                  >
-                    <span className="heart">
-                      {activeHeart ? (
-                        <span className="text-red-600">
-                          <AiFillHeart />
+                        <span>
+                          <AiFillStar />
                         </span>
-                      ) : (
-                        <AiOutlineHeart />
-                      )}
-                    </span>
-                  </button>
-                  <img
-                    className="h-full w-full rounded-[20px]"
-                    src="../assets/all/h2.png"
-                    alt=""
-                  />
-                  <div className="right-button absolute top-1/2 right-[5%] transform -translate-y-1/2">
-                    <button className="bg-white p-2 border-[1px] border-[#e0def7] rounded-[50%]">
-                      <AiOutlineRight />
-                    </button>
-                  </div>
-                  <div className="left-button absolute top-1/2 left-[5%] transform -translate-y-1/2">
-                    <button className="bg-white p-2 border-[1px] border-[#e0def7] rounded-[50%]">
-                      <AiOutlineLeft />
-                    </button>
-                  </div>
-                </div>
-                <div className="p-3 font-semibold text-[#101730] anima absolute w-full bottom-0 rounded-b-[20px]  bg-white">
-                  <p className="text-[14px]">Ağ şəhər</p>
-                  <div className="my-2 flex text-[#FF8A00]">
-                    <span>
-                      <AiFillStar />
-                    </span>
-                    <span>
-                      <AiFillStar />
-                    </span>
-                    <span>
-                      <AiFillStar />
-                    </span>
-                    <span>
-                      <AiFillStar />
-                    </span>
-                    <span>
-                      <AiFillStar />
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <p className="text-[16px]">$ 125 000</p>
-                    <button className="text-[#51aeea] text-[14px] flex items-center gap-2">
-                      Explore More
-                      <span>
-                        <AiOutlineRight />
-                      </span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </SwiperSlide>
-            <SwiperSlide>
-              <div className="  border-[1px] rounded-[20px] card relative">
-                <div className="h-[300px] relative">
-                  <button
-                    onClick={handleHeartClick}
-                    className="absolute right-[5%] top-[5%] bg-white p-2 border-[1px] border-[#e0def7] rounded-[8px] "
-                  >
-                    <span className="heart">
-                      {activeHeart ? (
-                        <span className="text-red-600">
-                          <AiFillHeart />
+                        <span>
+                          <AiFillStar />
                         </span>
-                      ) : (
-                        <AiOutlineHeart />
-                      )}
-                    </span>
-                  </button>
-                  <img
-                    className="h-full w-full rounded-[20px]"
-                    src="../assets/all/h4.png"
-                    alt=""
-                  />
-                  <div className="right-button absolute top-1/2 right-[5%] transform -translate-y-1/2">
-                    <button className="bg-white p-2 border-[1px] border-[#e0def7] rounded-[50%]">
-                      <AiOutlineRight />
-                    </button>
-                  </div>
-                  <div className="left-button absolute top-1/2 left-[5%] transform -translate-y-1/2">
-                    <button className="bg-white p-2 border-[1px] border-[#e0def7] rounded-[50%]">
-                      <AiOutlineLeft />
-                    </button>
-                  </div>
-                </div>
-                <div className="p-3 font-semibold text-[#101730] anima absolute w-full bottom-0 rounded-b-[20px]  bg-white">
-                  <p className="text-[14px]">Ağ şəhər</p>
-                  <div className="my-2 flex text-[#FF8A00]">
-                    <span>
-                      <AiFillStar />
-                    </span>
-                    <span>
-                      <AiFillStar />
-                    </span>
-                    <span>
-                      <AiFillStar />
-                    </span>
-                    <span>
-                      <AiFillStar />
-                    </span>
-                    <span>
-                      <AiFillStar />
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <p className="text-[16px]">$ 125 000</p>
-                    <button className="text-[#51aeea] text-[14px] flex items-center gap-2">
-                      Explore More
-                      <span>
-                        <AiOutlineRight />
-                      </span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </SwiperSlide>
-            <SwiperSlide>
-              <div className="  border-[1px] rounded-[20px] card relative">
-                <div className="h-[300px] relative">
-                  <button
-                    onClick={handleHeartClick}
-                    className="absolute right-[5%] top-[5%] bg-white p-2 border-[1px] border-[#e0def7] rounded-[8px] "
-                  >
-                    <span className="heart">
-                      {activeHeart ? (
-                        <span className="text-red-600">
-                          <AiFillHeart />
+                        <span>
+                          <AiFillStar />
                         </span>
-                      ) : (
-                        <AiOutlineHeart />
-                      )}
-                    </span>
-                  </button>
-                  <img
-                    className="h-full w-full rounded-[20px]"
-                    src="../assets/all/h.png"
-                    alt=""
-                  />
-                  <div className="right-button absolute top-1/2 right-[5%] transform -translate-y-1/2">
-                    <button className="bg-white p-2 border-[1px] border-[#e0def7] rounded-[50%]">
-                      <AiOutlineRight />
-                    </button>
-                  </div>
-                  <div className="left-button absolute top-1/2 left-[5%] transform -translate-y-1/2">
-                    <button className="bg-white p-2 border-[1px] border-[#e0def7] rounded-[50%]">
-                      <AiOutlineLeft />
-                    </button>
-                  </div>
-                </div>
-                <div className="p-3 font-semibold text-[#101730] anima absolute w-full bottom-0 rounded-b-[20px]  bg-white">
-                  <p className="text-[14px]">Ağ şəhər</p>
-                  <div className="my-2 flex text-[#FF8A00]">
-                    <span>
-                      <AiFillStar />
-                    </span>
-                    <span>
-                      <AiFillStar />
-                    </span>
-                    <span>
-                      <AiFillStar />
-                    </span>
-                    <span>
-                      <AiFillStar />
-                    </span>
-                    <span>
-                      <AiFillStar />
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <p className="text-[16px]">$ 125 000</p>
-                    <button className="text-[#51aeea] text-[14px] flex items-center gap-2">
-                      Explore More
-                      <span>
-                        <AiOutlineRight />
-                      </span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </SwiperSlide>
-            <SwiperSlide>
-              <div className="  border-[1px] rounded-[20px] card relative">
-                <div className="h-[300px] relative">
-                  <button
-                    onClick={handleHeartClick}
-                    className="absolute right-[5%] top-[5%] bg-white p-2 border-[1px] border-[#e0def7] rounded-[8px] "
-                  >
-                    <span className="heart">
-                      {activeHeart ? (
-                        <span className="text-red-600">
-                          <AiFillHeart />
+                        <span>
+                          <AiFillStar />
                         </span>
-                      ) : (
-                        <AiOutlineHeart />
-                      )}
-                    </span>
-                  </button>
-                  <img
-                    className="h-full w-full rounded-[20px]"
-                    src="../assets/all/h1.png"
-                    alt=""
-                  />
-                  <div className="right-button absolute top-1/2 right-[5%] transform -translate-y-1/2">
-                    <button className="bg-white p-2 border-[1px] border-[#e0def7] rounded-[50%]">
-                      <AiOutlineRight />
-                    </button>
+                      </div>
+                      <div className="flex justify-between">
+                        <p className="text-[16px]">{data.price}</p>
+                        <button className="text-[#51aeea] text-[14px] flex items-center gap-2">
+                          Explore More
+                          <span>
+                            <AiOutlineRight />
+                          </span>
+                        </button>
+                      </div>
+                    </div>
                   </div>
-                  <div className="left-button absolute top-1/2 left-[5%] transform -translate-y-1/2">
-                    <button className="bg-white p-2 border-[1px] border-[#e0def7] rounded-[50%]">
-                      <AiOutlineLeft />
-                    </button>
-                  </div>
-                </div>
-                <div className="p-3 font-semibold text-[#101730] anima absolute w-full bottom-0 rounded-b-[20px]  bg-white">
-                  <p className="text-[14px]">Ağ şəhər</p>
-                  <div className="my-2 flex text-[#FF8A00]">
-                    <span>
-                      <AiFillStar />
-                    </span>
-                    <span>
-                      <AiFillStar />
-                    </span>
-                    <span>
-                      <AiFillStar />
-                    </span>
-                    <span>
-                      <AiFillStar />
-                    </span>
-                    <span>
-                      <AiFillStar />
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <p className="text-[16px]">$ 125 000</p>
-                    <button className="text-[#51aeea] text-[14px] flex items-center gap-2">
-                      Explore More
-                      <span>
-                        <AiOutlineRight />
-                      </span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </SwiperSlide>
-            <SwiperSlide>
-              <div className="  border-[1px] rounded-[20px] card relative">
-                <div className="h-[300px] relative">
-                  <button
-                    onClick={handleHeartClick}
-                    className="absolute right-[5%] top-[5%] bg-white p-2 border-[1px] border-[#e0def7] rounded-[8px] "
-                  >
-                    <span className="heart">
-                      {activeHeart ? (
-                        <span className="text-red-600">
-                          <AiFillHeart />
-                        </span>
-                      ) : (
-                        <AiOutlineHeart />
-                      )}
-                    </span>
-                  </button>
-                  <img
-                    className="h-full w-full rounded-[20px]"
-                    src="../assets/all/h2.png"
-                    alt=""
-                  />
-                  <div className="right-button absolute top-1/2 right-[5%] transform -translate-y-1/2">
-                    <button className="bg-white p-2 border-[1px] border-[#e0def7] rounded-[50%]">
-                      <AiOutlineRight />
-                    </button>
-                  </div>
-                  <div className="left-button absolute top-1/2 left-[5%] transform -translate-y-1/2">
-                    <button className="bg-white p-2 border-[1px] border-[#e0def7] rounded-[50%]">
-                      <AiOutlineLeft />
-                    </button>
-                  </div>
-                </div>
-                <div className="p-3 font-semibold text-[#101730] anima absolute w-full bottom-0 rounded-b-[20px]  bg-white">
-                  <p className="text-[14px]">Ağ şəhər</p>
-                  <div className="my-2 flex text-[#FF8A00]">
-                    <span>
-                      <AiFillStar />
-                    </span>
-                    <span>
-                      <AiFillStar />
-                    </span>
-                    <span>
-                      <AiFillStar />
-                    </span>
-                    <span>
-                      <AiFillStar />
-                    </span>
-                    <span>
-                      <AiFillStar />
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <p className="text-[16px]">$ 125 000</p>
-                    <button className="text-[#51aeea] text-[14px] flex items-center gap-2">
-                      Explore More
-                      <span>
-                        <AiOutlineRight />
-                      </span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </SwiperSlide>
-            <SwiperSlide>
-              <div className="  border-[1px] rounded-[20px] card relative">
-                <div className="h-[300px] relative">
-                  <button
-                    onClick={handleHeartClick}
-                    className="absolute right-[5%] top-[5%] bg-white p-2 border-[1px] border-[#e0def7] rounded-[8px] "
-                  >
-                    <span className="heart">
-                      {activeHeart ? (
-                        <span className="text-red-600">
-                          <AiFillHeart />
-                        </span>
-                      ) : (
-                        <AiOutlineHeart />
-                      )}
-                    </span>
-                  </button>
-                  <img
-                    className="h-full w-full rounded-[20px]"
-                    src="../assets/all/h4.png"
-                    alt=""
-                  />
-                  <div className="right-button absolute top-1/2 right-[5%] transform -translate-y-1/2">
-                    <button className="bg-white p-2 border-[1px] border-[#e0def7] rounded-[50%]">
-                      <AiOutlineRight />
-                    </button>
-                  </div>
-                  <div className="left-button absolute top-1/2 left-[5%] transform -translate-y-1/2">
-                    <button className="bg-white p-2 border-[1px] border-[#e0def7] rounded-[50%]">
-                      <AiOutlineLeft />
-                    </button>
-                  </div>
-                </div>
-                <div className="p-3 font-semibold text-[#101730] anima absolute w-full bottom-0 rounded-b-[20px]  bg-white">
-                  <p className="text-[14px]">Ağ şəhər</p>
-                  <div className="my-2 flex text-[#FF8A00]">
-                    <span>
-                      <AiFillStar />
-                    </span>
-                    <span>
-                      <AiFillStar />
-                    </span>
-                    <span>
-                      <AiFillStar />
-                    </span>
-                    <span>
-                      <AiFillStar />
-                    </span>
-                    <span>
-                      <AiFillStar />
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <p className="text-[16px]">$ 125 000</p>
-                    <button className="text-[#51aeea] text-[14px] flex items-center gap-2">
-                      Explore More
-                      <span>
-                        <AiOutlineRight />
-                      </span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </SwiperSlide>
+                </SwiperSlide>
+              );
+            })}
           </Swiper>
         </div>
       </div>

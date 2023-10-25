@@ -1,0 +1,239 @@
+[
+  {
+    "id": 1,
+    "img": [
+      "../assets/all/h.png",
+      "../assets/all/h1.png",
+      "../assets/all/h4.png",
+      "../assets/all/h5.png",
+      "../assets/all/h6.png",
+      "../assets/all/h7.png"
+    ],
+    "title": "Ağ Şəhər",
+    "price": "125 000$"
+  },
+  {
+    "id": 2,
+    "img": [
+      "../assets/all/h1.png",
+      "../assets/all/h7.png",
+      "../assets/all/h2.png"
+    ],
+    "title": "Əhmədli",
+    "price": "125 000$"
+  },
+  {
+    "id": 3,
+    "img": [
+      "../assets/all/h2.png",
+      "../assets/all/h1.png",
+      "../assets/all/h2.png"
+    ],
+    "title": "Həzi Aslanov",
+    "price": "85 000$"
+  },
+  {
+    "id": 4,
+    "img": [
+      "../assets/all/h5.png",
+      "../assets/all/h1.png",
+      "../assets/all/h2.png"
+    ],
+    "title": "Yasamal",
+    "price": "145 000$"
+  },
+  {
+    "id": 5,
+    "img": [
+      "../assets/all/h4.png",
+      "../assets/all/h1.png",
+      "../assets/all/h2.png"
+    ],
+    "title": "Ağ Şəhər",
+    "price": "125 000$"
+  },
+  {
+    "id": 6,
+    "img": [
+      "../assets/all/h6.png",
+      "../assets/all/h1.png",
+      "../assets/all/h2.png"
+    ],
+    "title": "Qəbələ",
+    "price": "125 000$"
+  },
+  {
+    "id": 1,
+    "img": [
+      "../assets/all/h7.png",
+      "../assets/all/h1.png",
+      "../assets/all/h2.png"
+    ],
+    "title": "Ağ Şəhər",
+    "price": "125 000$"
+  },
+  {
+    "id": 2,
+    "img": [
+      "../assets/all/h8.png",
+      "../assets/all/h1.png",
+      "../assets/all/h2.png"
+    ],
+    "title": "Əhmədli",
+    "price": "125 000$"
+  },
+  {
+    "id": 3,
+    "img": [
+      "../assets/all/h1.png",
+      "../assets/all/h1.png",
+      "../assets/all/h2.png"
+    ],
+    "title": "Həzi Aslanov",
+    "price": "85 000$"
+  },
+  {
+    "id": 4,
+    "img": [
+      "../assets/all/h2.png",
+      "../assets/all/h1.png",
+      "../assets/all/h2.png"
+    ],
+    "title": "Yasamal",
+    "price": "145 000$"
+  },
+  {
+    "id": 5,
+    "img": [
+      "../assets/all/h4.png",
+      "../assets/all/h1.png",
+      "../assets/all/h2.png"
+    ],
+    "title": "Ağ Şəhər",
+    "price": "125 000$"
+  },
+  {
+    "id": 6,
+    "img": [
+      "../assets/all/h5.png",
+      "../assets/all/h1.png",
+      "../assets/all/h2.png"
+    ],
+    "title": "Qəbələ",
+    "price": "125 000$"
+  },
+  {
+    "id": 2,
+    "img": [
+      "../assets/all/h6.png",
+      "../assets/all/h1.png",
+      "../assets/all/h2.png"
+    ],
+    "title": "Əhmədli",
+    "price": "125 000$"
+  },
+  {
+    "id": 3,
+    "img": [
+      "../assets/all/h.png",
+      "../assets/all/h1.png",
+      "../assets/all/h2.png"
+    ],
+    "title": "Həzi Aslanov",
+    "price": "85 000$"
+  },
+  {
+    "id": 4,
+    "img": [
+      "../assets/all/h.png",
+      "../assets/all/h1.png",
+      "../assets/all/h2.png"
+    ],
+    "title": "Yasamal",
+    "price": "145 000$"
+  },
+  {
+    "id": 5,
+    "img": "../assets/all/h.png",
+    "title": "Ağ Şəhər",
+    "price": "125 000$"
+  },
+  {
+    "id": 6,
+    "img": "../assets/all/h.png",
+    "title": "Qəbələ",
+    "price": "125 000$"
+  },
+  {
+    "id": 3,
+    "img": "../assets/all/h2.png",
+    "title": "Həzi Aslanov",
+    "price": "85 000$"
+  },
+  {
+    "id": 4,
+    "img": "../assets/all/h4.png",
+    "title": "Yasamal",
+    "price": "145 000$"
+  },
+  {
+    "id": 5,
+    "img": "../assets/all/h.png",
+    "title": "Ağ Şəhər",
+    "price": "125 000$"
+  },
+  {
+    "id": 6,
+    "img": "../assets/all/h.png",
+    "title": "Qəbələ",
+    "price": "125 000$"
+  },
+  {
+    "id": 3,
+    "img": "../assets/all/h2.png",
+    "title": "Həzi Aslanov",
+    "price": "85 000$"
+  },
+  {
+    "id": 4,
+    "img": "../assets/all/h4.png",
+    "title": "Yasamal",
+    "price": "145 000$"
+  },
+  {
+    "id": 5,
+    "img": "../assets/all/h.png",
+    "title": "Ağ Şəhər",
+    "price": "125 000$"
+  },
+  {
+    "id": 6,
+    "img": "../assets/all/h.png",
+    "title": "Qəbələ",
+    "price": "125 000$"
+  },
+  {
+    "id": 3,
+    "img": "../assets/all/h2.png",
+    "title": "Həzi Aslanov",
+    "price": "85 000$"
+  },
+  {
+    "id": 4,
+    "img": "../assets/all/h4.png",
+    "title": "Yasamal",
+    "price": "145 000$"
+  },
+  {
+    "id": 5,
+    "img": "../assets/all/h.png",
+    "title": "Ağ Şəhər",
+    "price": "125 000$"
+  },
+  {
+    "id": 6,
+    "img": "../assets/all/h.png",
+    "title": "Qəbələ",
+    "price": "125 000$"
+  }
+]

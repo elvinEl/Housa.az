@@ -8,6 +8,9 @@
   box-sizing: border-box;
   font-family: "Open Sans", sans-serif;
 }
+.shadow-custom {
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
 .my-swiper .swiper-slide img {
   opacity: 0;
 }

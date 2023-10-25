@@ -17,6 +17,7 @@ import SearchResultLayout from "./components/layouts/searchResultsLayout/SearchR
 import List from "./components/core/searchResults/List";
 import Map from "./components/core/searchResults/Map";
 import MapLayout from "./components/layouts/searchResultsLayout/MapLayout";
+import DetailPage from "./components/detail/DetailPage";
 
 function App() {
   const router = createBrowserRouter(
@@ -32,6 +33,7 @@ function App() {
             <Route index element={<Map />} />
           </Route>
         </Route>
+        <Route path="details" element={<DetailPage />} />
       </Route>
     )
   );
